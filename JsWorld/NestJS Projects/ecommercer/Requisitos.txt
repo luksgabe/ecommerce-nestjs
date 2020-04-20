@@ -1,0 +1,23 @@
+Requisitos funcionais:
+O site deve ter:
+Lista de produtos
+Um buscador de produtos
+Um usuário
+Um carrinho de produtos
+
+
+
+Entidades:
+
+Produtos
+Categoria de Produtos
+Marca de Produto
+Tipo de Produto
+Material do Produto
+Carrinho
+Usuário
+Lista de endereços de entrega
+histórico de trocas
+histórico de compras
+Pedidos
+
