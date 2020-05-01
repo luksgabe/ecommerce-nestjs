@@ -1,8 +1,15 @@
-import { Entity, Column } from 'typeorm';
-import { BaseModel } from './base.model';
+import { 
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    UpdateDateColumn
+} from 'typeorm';
 
-@Entity()
-export class Product extends BaseModel {
+@Entity({ name: 'product' })
+export class Product {
+    @PrimaryGeneratedColumn()
+    id: number;
 
     @Column({ length: 50, nullable: false })
     name: string;
@@ -10,12 +17,18 @@ export class Product extends BaseModel {
     @Column({ length: 100, nullable: false })
     description: string;
 
-    @Column({ nullable: false })
+    @Column("decimal", { precision: 5, scale: 2, nullable: false },)
     value: number;
 
     @Column({ nullable: false })
-    color: number;
+    color: string;
 
     @Column({ nullable: false })
     evaluation: number;
+
+    @CreateDateColumn({name: 'created_at'})
+    createdAt: Date;
+
+    @UpdateDateColumn({name: 'updated_at'})
+    updatedAt: Date;
 }
