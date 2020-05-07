@@ -1,34 +1,56 @@
-import { 
-    Entity,
-    Column,
-    PrimaryGeneratedColumn,
-    CreateDateColumn,
-    UpdateDateColumn
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
+import { Brand } from './brand.model';
+import { ProductCategory } from './productCategory.model';
+import { ProductType } from './productType.model';
 
 @Entity({ name: 'product' })
 export class Product {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ length: 50, nullable: false })
-    name: string;
+  @Column({ length: 50, nullable: false })
+  name: string;
 
-    @Column({ length: 100, nullable: false })
-    description: string;
+  @Column({ length: 100, nullable: false })
+  description: string;
 
-    @Column("decimal", { precision: 5, scale: 2, nullable: false },)
-    value: number;
+  @Column('decimal', { precision: 5, scale: 2, nullable: false })
+  value: number;
 
-    @Column({ nullable: false })
-    color: string;
+  @Column({ nullable: false })
+  color: string;
 
-    @Column({ nullable: false })
-    evaluation: number;
+  @Column({ nullable: false })
+  evaluation: number;
 
-    @CreateDateColumn({name: 'created_at'})
-    createdAt: Date;
+  @ManyToOne(
+    type => Brand,
+    brand => brand.products,
+  )
+  brand: Brand;
 
-    @UpdateDateColumn({name: 'updated_at'})
-    updatedAt: Date;
+  @ManyToOne(
+    type => ProductCategory,
+    category => category.products,
+  )
+  category: ProductCategory;
+
+  @ManyToOne(
+    type => ProductType,
+    category => category.products,
+  )
+  type: ProductType;
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 }

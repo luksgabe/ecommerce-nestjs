@@ -4,9 +4,12 @@ import { ConfigService } from 'nestjs-dotenv';
 const configService: ConfigService = new ConfigService();
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const appOptions = { cors: true };
+  const app = await NestFactory.create(AppModule, appOptions);
+  app.setGlobalPrefix('api');
+
   const PORT = configService.get('EXPRESS_PORT');
-  
+
   await app.listen(PORT, () => {
     console.log(`Servidor iniciado na porta ${PORT}`);
   });
