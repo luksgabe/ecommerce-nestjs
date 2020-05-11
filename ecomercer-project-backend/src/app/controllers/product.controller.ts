@@ -24,7 +24,11 @@ export class ProductController extends AppController {
 
   @Post()
   create(@Body() productDto: ProductDto) {
-    return this.productService.create(productDto);
+    try {
+      return this.productService.create(productDto);
+    } catch (err) {
+      return err;
+    }
   }
 
   @Get(':id')

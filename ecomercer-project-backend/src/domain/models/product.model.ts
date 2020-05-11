@@ -9,6 +9,7 @@ import {
 import { Brand } from './brand.model';
 import { ProductCategory } from './productCategory.model';
 import { ProductType } from './productType.model';
+import { ProductDto } from '../../app/dtos/products.dto';
 
 @Entity({ name: 'product' })
 export class Product {
@@ -34,19 +35,19 @@ export class Product {
     type => Brand,
     brand => brand.products,
   )
-  brand: Brand;
+  public brand: Brand;
 
   @ManyToOne(
     type => ProductCategory,
     category => category.products,
   )
-  category: ProductCategory;
+  public category: ProductCategory;
 
   @ManyToOne(
     type => ProductType,
     category => category.products,
   )
-  type: ProductType;
+  public type: ProductType;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
