@@ -7,6 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Product } from './product.model';
+import { BrandDto } from '../../app/dtos/brand.dto';
 
 @Entity({ name: 'brand' })
 export class Brand {
@@ -27,4 +28,5 @@ export class Brand {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
 }

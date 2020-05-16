@@ -1,10 +1,11 @@
 import { Injectable, Post, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductRepository } from '../../infra/repositories/product.repository';
-import { ProductDto } from '../../app/dtos/products.dto';
+import { ProductDto } from '../../app/dtos/products/products.dto';
 import { Product } from '../models/product.model';
 import { Brand } from '../models/brand.model';
 import { BrandService } from './brand.service';
+import { BrandDto } from '../../app/dtos/brand.dto';
 
 @Injectable()
 export class ProductService {
@@ -14,12 +15,14 @@ export class ProductService {
     private readonly brandService: BrandService,
   ) {}
 
-  @Post()
   async create(productDto: ProductDto) {
-    const { id } = productDto.brand;
-    const brand: Brand = await this.brandService.getById(id);
-    productDto.brand = brand;
-    return this.productRepository.createProduct(productDto);
+    const brand: Brand = await this.brandService.getById(productDto.brandId);
+    productDto.brand = new BrandDto(brand);
+    const product = await this.productRepository.createProduct(productDto);
+
+    brand.products.push(product);
+    await this.brandService.update(new BrandDto(brand));
+    return product;
   }
 
   async getAllProducts(): Promise<ProductDto[]> {

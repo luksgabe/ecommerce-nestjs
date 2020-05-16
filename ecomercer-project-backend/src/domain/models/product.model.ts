@@ -8,8 +8,7 @@ import {
 } from 'typeorm';
 import { Brand } from './brand.model';
 import { ProductCategory } from './productCategory.model';
-import { ProductType } from './productType.model';
-import { ProductDto } from '../../app/dtos/products.dto';
+import { ProductDto } from '../../app/dtos/products/products.dto';
 
 @Entity({ name: 'product' })
 export class Product {
@@ -42,12 +41,6 @@ export class Product {
     category => category.products,
   )
   public category: ProductCategory;
-
-  @ManyToOne(
-    type => ProductType,
-    category => category.products,
-  )
-  public type: ProductType;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

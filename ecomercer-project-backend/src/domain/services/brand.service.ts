@@ -17,6 +17,11 @@ export class BrandService {
     return new BrandDto(result);
   }
 
+  public async update(brand: BrandDto): Promise<BrandDto> {
+    const result: Brand = await this.brandRepository.updateBrand(brand);
+    return new BrandDto(result);
+  }
+
   public async getAll(): Promise<BrandDto[]> {
     const result: Brand[] = await this.brandRepository.find();
     return result.map(brand => new BrandDto(brand));

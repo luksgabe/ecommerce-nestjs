@@ -7,7 +7,7 @@ import {
   Param,
   Body,
 } from '@nestjs/common';
-import { ProductDto } from '../dtos/products.dto';
+import { ProductDto } from '../dtos/products/products.dto';
 import { ProductService } from '../../domain/services/product.service';
 import { AppController } from './app.controller';
 

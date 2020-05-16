@@ -1,6 +1,6 @@
-import { ProductCategory } from '../../domain/models/productCategory.model';
-import { Brand } from '../../domain/models/brand.model';
-import { ProductType } from '../../domain/models/productType.model';
+import { BrandDto } from '../brand.dto';
+import { ProductCategoryDto } from '../productCategory.dto';
+
 
 export class ProductDto {
   id: number;
@@ -10,12 +10,12 @@ export class ProductDto {
   evaluation: number;
   color: string;
   brandId: number;
-  brand: Brand;
+  brand: BrandDto;
   categoryId: number;
-  category: ProductCategory;
-  typeId: number;
-  type: ProductType;
-
+  category: ProductCategoryDto;
+  createdAt: Date;
+  updatedAt: Date;
+  
   constructor(object) {
     this.id = object.id;
     this.name = object.name;
@@ -24,7 +24,6 @@ export class ProductDto {
     this.evaluation = object.evaluation;
     this.color = object.color;
     this.brand = object.brand;
-    this.typeId = object.typeId;
-    this.categoryId = object.categoryId;
+
   }
 }

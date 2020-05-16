@@ -72,39 +72,6 @@ export class CreateDatabaseBuymore1588816137115 implements MigrationInterface {
     ],
   });
 
-  private productTypeTable = new Table({
-    name: 'product_type',
-    columns: [
-      {
-        name: 'id',
-        type: 'integer',
-        isPrimary: true,
-        isGenerated: true, // Auto-increment
-        generationStrategy: 'increment',
-      },
-      {
-        name: 'name',
-        type: 'varchar',
-        length: '50',
-        isNullable: false,
-      },
-      {
-        name: 'created_at',
-        type: 'datetime',
-        isPrimary: false,
-        isNullable: false,
-        default: 'CURRENT_TIMESTAMP',
-      },
-      {
-        name: 'updated_at',
-        type: 'datetime',
-        isPrimary: false,
-        isNullable: false,
-        default: 'CURRENT_TIMESTAMP',
-      },
-    ],
-  });
-
   private productTable = new Table({
     name: 'product',
     columns: [
@@ -150,11 +117,6 @@ export class CreateDatabaseBuymore1588816137115 implements MigrationInterface {
       },
       {
         name: 'product_category_id',
-        type: 'integer',
-        isNullable: true,
-      },
-      {
-        name: 'product_type_id',
         type: 'integer',
         isNullable: true,
       },
@@ -229,29 +191,19 @@ export class CreateDatabaseBuymore1588816137115 implements MigrationInterface {
     referencedTableName: 'product_category',
   });
 
-  private productTypeFK = new TableForeignKey({
-    columnNames: ['product_type_id'],
-    referencedColumnNames: ['id'],
-    onDelete: 'CASCADE',
-    referencedTableName: 'product_type',
-  });
-
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createDatabase('buymore_db', true);
     await queryRunner.createTable(this.brandTable);
-    await queryRunner.createTable(this.productTypeTable);
     await queryRunner.createTable(this.productCategoryTable);
     await queryRunner.createTable(this.productTable);
     await queryRunner.createTable(this.userTable);
     await queryRunner.createForeignKey('product', this.brandFK);
     await queryRunner.createForeignKey('product', this.categoryFK);
-    await queryRunner.createForeignKey('product', this.productTypeFK);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropDatabase('buymore_db', true);
     await queryRunner.dropTable(this.brandTable);
-    await queryRunner.dropTable(this.productTypeTable);
     await queryRunner.dropTable(this.productCategoryTable);
     await queryRunner.dropTable(this.productTable);
     await queryRunner.dropTable(this.userTable);
@@ -262,12 +214,8 @@ export class CreateDatabaseBuymore1588816137115 implements MigrationInterface {
     );
     await queryRunner.dropForeignKey('product', brandFk);
     const categoryFK = table.foreignKeys.find(
-      fk => fk.columnNames.indexOf('brand_id') !== -1,
+      fk => fk.columnNames.indexOf('product_category_id') !== -1,
     );
     await queryRunner.dropForeignKey('product', categoryFK);
-    const productTypeFK = table.foreignKeys.find(
-      fk => fk.columnNames.indexOf('brand_id') !== -1,
-    );
-    await queryRunner.dropForeignKey('product', productTypeFK);
   }
 }

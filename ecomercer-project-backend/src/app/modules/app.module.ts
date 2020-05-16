@@ -6,7 +6,6 @@ import { ProductModule } from './product.module';
 import { typeOrmConfig } from '../../infra/config/typeorm.config';
 import { ConfigModule } from 'nestjs-dotenv';
 import { BrandModule } from './brand.module';
-import { ProductTypeModule } from './productType.module';
 import { ProductCategoryModule } from './productCategory.module';
 
 @Module({
@@ -15,7 +14,6 @@ import { ProductCategoryModule } from './productCategory.module';
     ConfigModule.forRoot(),
     ProductModule,
     BrandModule,
-    ProductTypeModule,
     ProductCategoryModule,
   ],
   controllers: [AppController],
