@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/modules/app.module';
 import { ConfigService } from 'nestjs-dotenv';
-import { automapper } from './';
+import { AutoMapperConfig } from './app/automapper';
+
 const configService: ConfigService = new ConfigService();
 
 async function bootstrap() {
@@ -9,14 +10,18 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, appOptions);
   app.setGlobalPrefix('api');
 
-  automapper.initialize(configFunction: (config: IConfiguration) => void): void;
-  automapper.createMap(sourceKey: string, destinationKey: string);
-  automapper.map(sourceKey: string, destinationKey: string, sourceObject: any);
+  initiateAppConfig();
 
   const PORT = configService.get('EXPRESS_PORT');
 
   await app.listen(PORT, () => {
+    '';
     console.log(`Servidor iniciado na porta ${PORT}`);
   });
 }
+
+const initiateAppConfig = () => {
+  AutoMapperConfig.mapperList;
+};
+
 bootstrap();
