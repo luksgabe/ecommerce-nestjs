@@ -1,3 +1,4 @@
+import { Field, ObjectType } from '@nestjs/graphql';
 import {
   Entity,
   Column,
@@ -7,26 +8,29 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Product } from './product.model';
-import { ProductCategoryDto } from '../../app/dtos/productCategory.dto';
 
+@ObjectType()
 @Entity({ name: 'product_category' })
 export class ProductCategory {
+  @Field()
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Field()
   @Column({ length: 50, nullable: false })
   name: string;
+
+  @Field()
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
+
+  @Field()
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 
   @OneToMany(
     type => Product,
     product => product.category,
   )
   products: Product[];
-
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
-
 }

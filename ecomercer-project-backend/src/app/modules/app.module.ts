@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
 import { AppController } from '../controllers/app.controller';
 import { AppService } from '../../domain/services/app.service';
 import { ProductModule } from './product.module';
@@ -12,6 +13,10 @@ import { ProductCategoryModule } from './productCategory.module';
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
     ConfigModule.forRoot(),
+    GraphQLModule.forRoot({
+      autoSchemaFile: 'schema.gql',
+      playground: true,
+    }),
     ProductModule,
     BrandModule,
     ProductCategoryModule,

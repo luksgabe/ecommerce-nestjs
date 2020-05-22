@@ -16,13 +16,18 @@ export class ProductService {
   ) {}
 
   async create(productDto: ProductDto) {
-    const brand: Brand = await this.brandService.getById(productDto.brandId);
-    productDto.brand = new BrandDto(brand);
-    const product = await this.productRepository.createProduct(productDto);
+    try {
+      const brand: Brand = await this.brandService.getById(productDto.brand.id);
+      productDto.brand = automapper.map('Brand', 'BrandDto', brand);
 
-    brand.products.push(product);
-    await this.brandService.update(new BrandDto(brand));
-    return product;
+      const product = await this.productRepository.createProduct(productDto);
+      brand.products.push(automapper.map('ProductDto', 'Product', product));
+
+      await this.brandService.update(productDto.brand);
+      return product;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async getAllProducts(): Promise<ProductDto[]> {

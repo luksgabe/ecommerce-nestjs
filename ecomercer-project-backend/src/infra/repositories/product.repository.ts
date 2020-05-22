@@ -9,26 +9,20 @@ import { Brand } from '../../domain/models/brand.model';
 export class ProductRepository extends Repository<Product>
   implements IProductRepository {
   createProduct = async (dto: ProductDto) => {
-    const product = {
-      name: dto.name,
-      description: dto.description,
-      value: dto.value,
-      evaluation: dto.evaluation,
-      color: dto.color,
-      brand: this.convertBrand(dto.brand),
+    let product = new Product();
+    product.name = dto.name;
+    product.description = dto.description;
+    product.value = dto.value;
+    product.evaluation = dto.evaluation;
+    product.color = dto.color;
+    product.brand = automapper.map('Brand', 'BrandDto', dto.brand);
+    product.createdAt = new Date();
+    product.updatedAt = new Date();
 
-    };
-    return await this.save(product);
+    let result = await this.save(product);
+    return { result };
   };
   getAllProducts = async () => {
     return await this.find();
   };
-
-  // private convertBrand = async (dto: BrandDto) => {
-  //   const brand = new Brand();
-  //   const brandReturn: Brand = Object.assign(brand, dto);
-  //   return brandReturn;
-  // }
-
-  // private convertProductCategory = async (dto: Product)
 }

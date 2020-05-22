@@ -21,7 +21,7 @@ async function bootstrap() {
 }
 
 const initiateAppConfig = () => {
-  AutoMapperConfig.mapperList;
+  AutoMapperConfig.mapperInit();
 };
 
 bootstrap();
