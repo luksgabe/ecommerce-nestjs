@@ -13,13 +13,13 @@ import { ProductCategoryModule } from './productCategory.module';
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
     ConfigModule.forRoot(),
+    ProductModule,
+    BrandModule,
+    ProductCategoryModule,
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
       playground: true,
     }),
-    ProductModule,
-    BrandModule,
-    ProductCategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -9,7 +9,6 @@ import {
 } from 'typeorm';
 import { Brand } from './brand.model';
 import { ProductCategory } from './productCategory.model';
-import { ProductDto } from '../../app/dtos/products/products.dto';
 
 @ObjectType()
 @Entity({ name: 'product' })
