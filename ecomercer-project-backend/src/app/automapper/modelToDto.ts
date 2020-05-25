@@ -6,7 +6,10 @@ export class ModelToDto {
     automapper.initialize((config: AutoMapperJs.IConfiguration) => {
       config.createMap('Product', 'ProductDto');
       config.createMap('Brand', 'BrandDto');
+
       config.createMap('ProductCategory', 'ProductCategoryDto');
+      config.createMap('ProductCategory', 'ProductCategoryInput');
+      config.createMap('ProductCategoryInput', 'ProductCategoryDto');
     });
   }
 }

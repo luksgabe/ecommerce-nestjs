@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Brand } from '../../domain/models/brand.model';
 import { BrandRepository } from '../../infra/repositories/brand.repository';
@@ -6,14 +6,10 @@ import { BrandController } from '../controllers/brand.controller';
 import { BrandService } from '../../domain/services/brand.service';
 import { BrandResolver } from '../../infra/resolvers/brand.resolver';
 
-const graphQLImports = [BrandResolver];
-
+@Global()
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Brand, BrandRepository]),
-    ...graphQLImports,
-  ],
+  imports: [TypeOrmModule.forFeature([Brand, BrandRepository])],
   controllers: [BrandController],
-  providers: [BrandService],
+  providers: [BrandResolver, BrandService],
 })
 export class BrandModule {}

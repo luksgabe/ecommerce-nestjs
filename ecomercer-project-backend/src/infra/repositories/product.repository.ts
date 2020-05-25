@@ -15,11 +15,10 @@ export class ProductRepository extends Repository<Product>
     product.value = dto.value;
     product.evaluation = dto.evaluation;
     product.color = dto.color;
-    product.brand = automapper.map('Brand', 'BrandDto', dto.brand);
     product.createdAt = new Date();
     product.updatedAt = new Date();
 
-    let result = await this.save(product);
+    let result = await this.save({ ...product, brandId: dto.brandId });
     return { result };
   };
   getAllProducts = async () => {

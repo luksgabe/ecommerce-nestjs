@@ -9,6 +9,7 @@ export class ProductDto {
   evaluation: number;
   color: string;
   brand: BrandDto;
+  brandId: number;
   categoryId: number;
   category: ProductCategoryDto;
   createdAt: Date;
@@ -22,5 +23,6 @@ export class ProductDto {
     this.evaluation = object.evaluation;
     this.color = object.color;
     this.brand = object.brand;
+    this.brandId = object.brandId;
   }
 }

@@ -7,11 +7,13 @@ import { ProductCategory } from '../models/productCategory.model';
 export class ProductCategoryService {
   constructor(
     @InjectRepository(ProductCategoryRepository)
-    private readonly productCategoryRepository: ProductCategoryRepository,
+    public readonly productCategoryRepository: ProductCategoryRepository,
   ) {}
 
   public async create(productCategoryDto: ProductCategoryDto) {
-    const result: ProductCategory = await this.productCategoryRepository.createCategory(productCategoryDto);
+    const result: ProductCategory = await this.productCategoryRepository.createCategory(
+      productCategoryDto,
+    );
     console.log(result);
     return new ProductCategoryDto(result);
   }

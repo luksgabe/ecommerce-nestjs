@@ -8,7 +8,7 @@ import { Brand } from '../models/brand.model';
 export class BrandService {
   constructor(
     @InjectRepository(BrandRepository)
-    private readonly brandRepository: BrandRepository,
+    public readonly brandRepository: BrandRepository,
   ) {}
 
   public async create(brandDto: BrandDto): Promise<BrandDto> {

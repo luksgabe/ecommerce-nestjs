@@ -1,18 +1,4 @@
 import { Field, InputType } from 'type-graphql';
-import BrandInput from './brand.input';
-
-class ProductBrandConnectInput {
-  @Field()
-  readonly id: number;
-}
-
-class ProductBrandInput {
-  @Field({ nullable: true })
-  readonly connect: ProductBrandConnectInput;
-
-  @Field({ nullable: true })
-  readonly create: BrandInput;
-}
 
 @InputType()
 class ProductInput {
@@ -30,6 +16,12 @@ class ProductInput {
 
   @Field()
   readonly evaluation: number;
+
+  @Field()
+  readonly brandId: number;
+
+  @Field()
+  readonly productCategoryId: number;
 }
 
 export default ProductInput;
