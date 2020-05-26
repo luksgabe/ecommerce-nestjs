@@ -9,13 +9,15 @@ export class BrandRepository extends Repository<Brand> {
     return await this.save(brand);
   };
 
-  updateBrand = async (brand: BrandDto) => {
-    const toUpdate = await this.findOne(brand.id);
-    // toUpdate.name = brand.name;
-    // toUpdate.products = brand.products.map(dto => new Product(dto));
-    // toUpdate.updatedAt = brand.updatedAt;
-    // toUpdate.createdAt = brand.createdAt;
-    const updated = Object.assign(toUpdate, brand);
-    return await this.save(updated);
-  }
+  updateBrand = async (dto: BrandDto) => {
+    const brand = {
+      name: dto.name,
+      products: dto.products.map(dto =>
+        automapper.map('ProductDto', 'Product', dto),
+      ),
+      updatedAt: new Date(),
+      createdAt: dto.createdAt,
+    };
+    return await this.save(brand);
+  };
 }

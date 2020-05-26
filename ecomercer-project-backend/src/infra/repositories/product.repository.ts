@@ -2,8 +2,6 @@ import { Repository, EntityRepository } from 'typeorm';
 import { IProductRepository } from '../../domain/interfaces/iproduct.repository';
 import { ProductDto } from '../../app/dtos/products/products.dto';
 import { Product } from '../../domain/models/product.model';
-import { BrandDto } from '../../app/dtos/brand.dto';
-import { Brand } from '../../domain/models/brand.model';
 
 @EntityRepository(Product)
 export class ProductRepository extends Repository<Product>
@@ -15,20 +13,25 @@ export class ProductRepository extends Repository<Product>
       value: dto.value,
       evaluation: dto.evaluation,
       color: dto.color,
-      brand: this.convertBrand(dto.brand),
-
+      brand: dto.brand,
+      category: dto.category,
     };
-    return await this.save(product);
+
+    const newProduct = await this.create(product);
+    let result = await this.save(newProduct);
+    return result;
   };
   getAllProducts = async () => {
-    return await this.find();
+    return await this.createQueryBuilder('product')
+      .innerJoin('product.brand', 'brand')
+      .innerJoin('product.category', 'category')
+      .select([
+        'product',
+        'brand.id',
+        'brand.name',
+        'category.id',
+        'category.name',
+      ])
+      .getMany();
   };
-
-  // private convertBrand = async (dto: BrandDto) => {
-  //   const brand = new Brand();
-  //   const brandReturn: Brand = Object.assign(brand, dto);
-  //   return brandReturn;
-  // }
-
-  // private convertProductCategory = async (dto: Product)
 }
