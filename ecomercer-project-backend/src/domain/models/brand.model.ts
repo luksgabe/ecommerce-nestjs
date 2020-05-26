@@ -28,9 +28,11 @@ export class Brand {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToMany(
-    type => Product,
-    product => product.brand,
-  )
+  @OneToMany((type) => Product, (product) => product.brand)
   products: Product[];
+
+  includeProducts(product: Product) {
+    if (this.products.length) this.products.push(product);
+    else this.products = [product];
+  }
 }

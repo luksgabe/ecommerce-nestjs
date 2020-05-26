@@ -24,5 +24,7 @@ export class ProductDto {
     this.color = object.color;
     this.brand = object.brand;
     this.brandId = object.brandId;
+    this.category = object.category;
+    this.categoryId = object.categoryId;
   }
 }

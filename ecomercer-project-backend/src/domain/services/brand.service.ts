@@ -24,10 +24,13 @@ export class BrandService {
 
   public async getAll(): Promise<BrandDto[]> {
     const result: Brand[] = await this.brandRepository.find();
-    return result.map(brand => new BrandDto(brand));
+    return result.map((brand) => new BrandDto(brand));
   }
 
   public async getById(id: number): Promise<Brand> {
-    return await this.brandRepository.findOne(id);
+    return await this.brandRepository.findOne({
+      where: { id },
+      relations: ['products'],
+    });
   }
 }

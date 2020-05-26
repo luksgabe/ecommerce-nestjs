@@ -2,26 +2,36 @@ import { Repository, EntityRepository } from 'typeorm';
 import { IProductRepository } from '../../domain/interfaces/iproduct.repository';
 import { ProductDto } from '../../app/dtos/products/products.dto';
 import { Product } from '../../domain/models/product.model';
-import { BrandDto } from '../../app/dtos/brand.dto';
-import { Brand } from '../../domain/models/brand.model';
 
 @EntityRepository(Product)
 export class ProductRepository extends Repository<Product>
   implements IProductRepository {
   createProduct = async (dto: ProductDto) => {
-    let product = new Product();
-    product.name = dto.name;
-    product.description = dto.description;
-    product.value = dto.value;
-    product.evaluation = dto.evaluation;
-    product.color = dto.color;
-    product.createdAt = new Date();
-    product.updatedAt = new Date();
+    const product = {
+      name: dto.name,
+      description: dto.description,
+      value: dto.value,
+      evaluation: dto.evaluation,
+      color: dto.color,
+      brand: dto.brand,
+      category: dto.category,
+    };
 
-    let result = await this.save({ ...product, brandId: dto.brandId });
-    return { result };
+    const newProduct = await this.create(product);
+    let result = await this.save(newProduct);
+    return result;
   };
   getAllProducts = async () => {
-    return await this.find();
+    return await this.createQueryBuilder('product')
+      .innerJoin('product.brand', 'brand')
+      .innerJoin('product.category', 'category')
+      .select([
+        'product',
+        'brand.id',
+        'brand.name',
+        'category.id',
+        'category.name',
+      ])
+      .getMany();
   };
 }

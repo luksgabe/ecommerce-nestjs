@@ -18,8 +18,15 @@ export class ProductCategoryService {
     return new ProductCategoryDto(result);
   }
 
+  public async getById(id: number): Promise<ProductCategory> {
+    return await this.productCategoryRepository.findOne({
+      where: { id },
+      relations: ['products'],
+    });
+  }
+
   public async getAll(): Promise<ProductCategoryDto[]> {
     const result: ProductCategory[] = await this.productCategoryRepository.find();
-    return result.map(brand => new ProductCategoryDto(brand));
+    return result.map((brand) => new ProductCategoryDto(brand));
   }
 }
